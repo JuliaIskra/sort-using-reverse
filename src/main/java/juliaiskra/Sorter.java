@@ -7,64 +7,36 @@ public class Sorter {
     public static void sort(int[] array) {
         if (array.length < 2) return;
 
-        for (int currentIndex = 1; currentIndex < array.length; currentIndex++) {
-            final int current = array[currentIndex];
-
-            if (current <= array[0]) {
-                putInTheBeginning(array, currentIndex);
-                continue;
-            }
-
-            final int biggerThanCurrentIndex = getFirstBiggerElementIndex(array, current);
-            if (biggerThanCurrentIndex < currentIndex && biggerThanCurrentIndex < array.length) {
-                putAfter(array, biggerThanCurrentIndex - 1);
-            }
+        for (int currentIndex = 0; currentIndex < array.length; currentIndex++) {
+            final int maxIndex = findMaxElementIndex(array, currentIndex);
+            putInTheBeginning(array, maxIndex);
         }
     }
 
-    private static int getFirstBiggerElementIndex(int[] array, int compareTo) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] > compareTo) return i;
-        }
-
-        return array.length;
-    }
-
-    public static void sortFromInterview(int[] array) {
-        if (array.length < 2) return;
-        if (array[1] < array[0]) {
-            reverse(array, 2);
-        }
-
-        for (int compareIndex = 2; compareIndex < array.length; compareIndex++) {
-            final int minSorted = array[0];
-            final int maxSorted = array[compareIndex - 1];
-            final int current = array[compareIndex];
-
-            if (current <= minSorted) {
-                putInTheBeginning(array);
-            } else if (minSorted < current && current < maxSorted) {
-                putAfter(array, compareIndex - 1);
-            } else if (current >= maxSorted) {
-                continue;
+    /**
+     * Finds maximum element in an array starting from specified index and returns its index
+     *
+     * @param array array to search
+     * @param startFrom index to start search from
+     * @return index of maximum element
+     */
+    private static int findMaxElementIndex(int[] array, int startFrom) {
+        int max = array[startFrom];
+        int maxIndex = startFrom;
+        for (int i = startFrom + 1; i < array.length; i++) {
+            int current = array[i];
+            if (current > max) {
+                max = current;
+                maxIndex = i;
             }
         }
+
+        return maxIndex;
     }
 
     private static void putInTheBeginning(int[] array, int index) {
         reverse(array, index);
         reverse(array, index + 1);
-    }
-
-    private static void putInTheBeginning(int[] array) {
-        putInTheBeginning(array, array.length - 1);
-    }
-
-    private static void putAfter(int[] array, int index) {
-        reverse(array, index + 1);
-        reverse(array, array.length - 1);
-        reverse(array, array.length);
-        reverse(array, index + 2);
     }
 
     /**
