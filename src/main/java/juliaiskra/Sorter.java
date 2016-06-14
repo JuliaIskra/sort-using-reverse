@@ -15,9 +15,9 @@ public class Sorter {
                 continue;
             }
 
-            final int biggerThenCurrentIndex = getFirstBiggerElementIndex(array, current);
-            if (biggerThenCurrentIndex < currentIndex && biggerThenCurrentIndex < array.length) {
-                putAfter(array, biggerThenCurrentIndex - 1);
+            final int biggerThanCurrentIndex = getFirstBiggerElementIndex(array, current);
+            if (biggerThanCurrentIndex < currentIndex && biggerThanCurrentIndex < array.length) {
+                putAfter(array, biggerThanCurrentIndex - 1);
             }
         }
     }
